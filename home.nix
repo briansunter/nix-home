@@ -17,7 +17,6 @@ with import <nixpkgs> {};
     # pkgs.vscode
     # pkgs.anki
     pkgs.fzf
-    pkgs.mtr
     pkgs.pydf
     pkgs.rustracer
     pkgs.aria2
@@ -67,4 +66,7 @@ with import <nixpkgs> {};
     userName = "bsunter";
     userEmail = "public@briansunter.com";
   };
+ programs.zsh.initExtra= ''
+    if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi
+'';
 }
