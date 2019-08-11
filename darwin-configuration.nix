@@ -102,6 +102,10 @@
             alias ga='git add'
             alias ec='emacsclient -c'
 	    '';
+promptInit = ''
+    autoload -U promptinit && promptinit && prompt walters
+    PS1='🐟 '
+'';
   };
 
   system.stateVersion = 4;
@@ -114,6 +118,7 @@
     GOWORKSPACE = "$GOPATH/src/github.com/bsunter";
     PAGER = "less -R";
     EDITOR = "emacsclient";
+    RUST_SRC_PATH="${pkgs.rustPlatform.rustcSrc}";
 
     # History
     HISTSIZE = "1000";
