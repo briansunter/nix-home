@@ -69,6 +69,7 @@ with import <nixpkgs> {};
   };
   programs.zsh.initExtra= ''
     if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi
+    if [ -e /etc/static/zshrc ]; then . /etc/static/zshrc; fi
 '';
 
 
