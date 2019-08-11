@@ -1,21 +1,22 @@
 { pkgs, ... }:
 with import <nixpkgs> {};
-
 {
   nixpkgs.config.allowUnfree = true;
 
   programs.zsh.enable = true;
 
   home.sessionVariables = {
-   RUST_SRC_PATH="${pkgs.rustPlatform.rustcSrc}";
-   PS1 = "🐟";
+    RUST_SRC_PATH="${pkgs.rustPlatform.rustcSrc}";
+    PS1 = "🐟 ";
   };
-
   home.packages = [
-     # pkgs.firefox
+    #pkgs.firefox
     # pkgs.texlive.combined.scheme-tetex
     # pkgs.vscode
-    # pkgs.anki
+    pkgs.aws
+    pkgs.terraform_0_12
+    pkgs.keybase
+    #pkgs.anki
     pkgs.fzf
     pkgs.pydf
     pkgs.rustracer
@@ -66,7 +67,9 @@ with import <nixpkgs> {};
     userName = "bsunter";
     userEmail = "public@briansunter.com";
   };
- programs.zsh.initExtra= ''
+  programs.zsh.initExtra= ''
     if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi
 '';
+
+
 }
