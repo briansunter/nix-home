@@ -3,47 +3,48 @@
   imports = [ <home-manager/nix-darwin> ];
 
   nixpkgs.config.allowUnfree = true;
+
   # $ nix-env -qaP | grep wget
   environment.systemPackages =
     with pkgs; [
-      vim
-      neovim
-      aws
-      terraform_0_12
-      keybase
-      #anki
       ansible
-      pkgs.nodePackages.javascript-typescript-langserver
-      pkgs.nodePackages.eslint
-      pkgs.nodePackages.prettier
-      fzf
-      pydf
-      rustracer
-      aria2
-      nnn
-      streamlink
       antibody
+      aria2
+      aws
       burpsuite
+      cabal-install
       cargo
       emacs
       fortune
-      nodejs-12_x
+      fzf
       gcc
       ghc
-      cabal-install
-      stack
       gnupg
       go
       gradle
       htop
       jq
+      keybase
       leiningen
+      minikube
+      neovim
+      nnn
+      nodejs-12_x
       openjdk
       pandoc
+      pkgs.nodePackages.eslint
+      pkgs.nodePackages.javascript-typescript-langserver
+      pkgs.nodePackages.prettier
+      pydf
       ripgrep
       rustc
       rustfmt
+      rustracer
+      stack
+      streamlink
+      terraform_0_12
       unzip
+      vim
       wget
       youtube-dl
     ];
@@ -97,20 +98,18 @@
     enableBashCompletion = true;
     enableFzfHistory = true;
     enableSyntaxHighlighting = true;
+    enableFzfGit = true;
+    promptInit=''
+      zstyle :prompt:pure:path color cyan
+      '';
     shellInit = ''
-	    alias gs='git status'
-	    alias gc='git commit'
-            alias ga='git add'
-            alias ec='emacsclient -c'
-            alias ds='darwin-rebuild switch'
-	    '';
-promptInit = ''
-    autoload -U promptinit && promptinit && prompt walters
-    PS1='🐟 '
-'';
+      alias ec='emacsclient -c'
+      alias ds='darwin-rebuild switch'
+      source <(antibody init)
+      antibody bundle < ~/.zsh_plugins.txt
+      '';
   };
 
-  system.stateVersion = 4;
   services.emacs.enable = true;
   environment.variables = {
     # General
@@ -131,20 +130,21 @@ promptInit = ''
     TERMINFO = "/usr/share/terminfo/";
   };
 
-
   users.users.bsunter.name = "Brian Sunter";
-
   home-manager.users.bsunter= { pkgs, ... }: {
     programs.neovim = {
-enable = true;
-     configure = {
+      enable = true;
+      configure = {
         customRC = ''
+map <Space> <Leader> " Space to leader
+set number                 " show line numbers
+map <silent> <Leader>ft :NERDTreeToggle<CR>
 filetype plugin indent on  " Load plugins according to detected filetype.
 syntax on                  " Enable syntax highlighting.
 
 set autoindent             " Indent according to previous line.
 set expandtab              " Use spaces instead of tabs.
-set softtabstop =4         " Tab key indents by 4 spaces.
+set softtabstop =2         " Tab key indents by 2 spaces.
 set shiftwidth  =4         " >> indents by 4 spaces.
 set shiftround             " >> indents to next multiple of 'shiftwidth'.
 
@@ -171,16 +171,30 @@ set report      =0         " Always report changed lines.
 set synmaxcol   =200       " Only highlight the first 200 columns.
 
 set list                   " Show non-printable characters.
-set number                 " show line numbers
         '';
         packages.myVimPackage = with pkgs.vimPlugins; {
           # see examples below how to use custom packages
-          start = [ fugitive vim-polyglot vim-markdown];
+          start = [ fugitive vim-polyglot vim-markdown vim-gitgutter "lightline.vim"];
           opt = [ ];
-        };      
+        };
       };
     };
     home.file = {
+      ".zsh_plugins.txt".text = ''
+aswitalski/oh-my-zsh-sensei-git-plugin
+caarlos0/zsh-mkc
+caarlos0/zsh-open-github-pr
+djui/alias-tips
+mafredri/zsh-async
+pbar1/zsh-terraform
+sindresorhus/pure
+webyneter/docker-aliases
+wting/autojump
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-completions
+zsh-users/zsh-history-substring-search
+zsh-users/zsh-syntax-highlighting
+'';
       ".emacs.d" = {
         source = pkgs.fetchFromGitHub {
           owner = "syl20bnr";
@@ -196,9 +210,9 @@ set number                 " show line numbers
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
   nix.package = pkgs.nix;
-
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
+  system.stateVersion = 4;
   # You should generally set this to the total number of logical cores in your system.
   # $ sysctl -n hw.ncpu
   nix.maxJobs = 1;
