@@ -9,7 +9,9 @@
   environment.systemPackages =
     with pkgs; [
       ansible
+      fasd
       antibody
+      lastpass-cli
       aria2
       aws
       burpsuite
@@ -116,8 +118,18 @@
       alias simple-serve='python -m SimpleHTTPServer 8000'
       source <(antibody init)
       antibody bundle < ~/.zsh_plugins.txt
-      '';
+      if test -f ~/.zshrc; then
+        source ~/.zshrc
+      fi
+      export PATH=$PATH:${pkgs.fasd}/bin
+      fasd_cache="$HOME/.fasd-init-bash"
+if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
+  fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install >| "$fasd_cache"
+fi
+source "$fasd_cache"
+unset fasd_cache
 
+      '';
   };
 
   services.emacs.enable = true;
@@ -130,8 +142,6 @@
     PAGER = "less -R";
     EDITOR = "emacsclient";
     RUST_SRC_PATH="${pkgs.rustPlatform.rustcSrc}";
-    ANDROID_SDK_ROOT="/usr/local/share/android-sdk";
-    ANDROID_NDK_HOME="/usr/local/share/android-ndk";
 
     # History
     HISTSIZE = "1000";
@@ -147,43 +157,6 @@
     programs.neovim = {
       enable = true;
       configure = {
-        customRC = ''
-map <Space> <Leader> " Space to leader
-set number                 " show line numbers
-map <silent> <Leader>ft :NERDTreeToggle<CR>
-filetype plugin indent on  " Load plugins according to detected filetype.
-syntax on                  " Enable syntax highlighting.
-
-set autoindent             " Indent according to previous line.
-set expandtab              " Use spaces instead of tabs.
-set softtabstop =2         " Tab key indents by 2 spaces.
-set shiftwidth  =4         " >> indents by 4 spaces.
-set shiftround             " >> indents to next multiple of 'shiftwidth'.
-
-set backspace   =indent,eol,start  " Make backspace work as you would expect.
-set hidden                 " Switch between buffers without having to save first.
-set laststatus  =2         " Always show statusline.
-set display     =lastline  " Show as much as possible of the last line.
-
-set showmode               " Show current mode in command-line.
-set showcmd                " Show already typed keys when more are expected.
-
-set incsearch              " Highlight while searching with / or ?.
-set hlsearch               " Keep matches highlighted.
-
-set ttyfast                " Faster redrawing.
-set lazyredraw             " Only redraw when necessary.
-
-set splitbelow             " Open new windows below the current window.
-set splitright             " Open new windows right of the current window.
-
-set cursorline             " Find the current line quickly.
-set wrapscan               " Searches wrap around end-of-file.
-set report      =0         " Always report changed lines.
-set synmaxcol   =200       " Only highlight the first 200 columns.
-
-set list                   " Show non-printable characters.
-        '';
         packages.myVimPackage = with pkgs.vimPlugins; {
           # see examples below how to use custom packages
           start = [ fugitive vim-polyglot vim-markdown vim-gitgutter];
@@ -192,21 +165,10 @@ set list                   " Show non-printable characters.
       };
     };
     home.file = {
-      ".zsh_plugins.txt".text = ''
-aswitalski/oh-my-zsh-sensei-git-plugin
-caarlos0/zsh-mkc
-caarlos0/zsh-open-github-pr
-djui/alias-tips
-mafredri/zsh-async
-pbar1/zsh-terraform
-sindresorhus/pure
-webyneter/docker-aliases
-wting/autojump
-zsh-users/zsh-autosuggestions
-zsh-users/zsh-completions
-zsh-users/zsh-history-substring-search
-zsh-users/zsh-syntax-highlighting
-'';
+      ".vimrc".text = (builtins.readFile ./.vimrc);
+      ".zsh_plugins.txt".text = (builtins.readFile ./.zsh_plugins.txt);
+      ".spacemacs".text = (builtins.readFile ./.spacemacs);
+      ".zshrc".text = (builtins.readFile ./.zshrc);
       ".emacs.d" = {
         source = pkgs.fetchFromGitHub {
           owner = "syl20bnr";
