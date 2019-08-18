@@ -3,6 +3,7 @@
   imports = [ <home-manager/nix-darwin> ];
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.android_sdk.accept_license = true;
 
   # $ nix-env -qaP | grep wget
   environment.systemPackages =
@@ -20,7 +21,6 @@
       gcc
       ghc
       gnupg
-      go
       gradle
       htop
       jq
@@ -101,25 +101,37 @@
     enableFzfGit = true;
     promptInit=''
       zstyle :prompt:pure:path color cyan
+         # from https://gist.github.com/oshybystyi/2c30543cd48b2c9ecab0
+      EMOJI=(🐦 🚀 🎨 🍕 🐭 ☕️ 🔬 🐷 🐼 🐶 🐧 🐳 🍔 🍻 🔮 💰 💎 💾 💜 🍪 🌞 🌍 🐌 🐓 🐏 ✈️ )
+      function random_emoji {
+        echo -n "$EMOJI[$RANDOM%$#EMOJI+1]"
+      }
+      setopt PROMPT_SUBST
+      PROMPT="$(random_emoji)"
       '';
     shellInit = ''
+      export PATH=$PATH:$GOPATH/bin
       alias ec='emacsclient -c'
       alias ds='darwin-rebuild switch'
+      alias simple-serve='python -m SimpleHTTPServer 8000'
       source <(antibody init)
       antibody bundle < ~/.zsh_plugins.txt
       '';
+
   };
 
   services.emacs.enable = true;
   environment.variables = {
     # General
     HOME = "/Users/bsunter";
-    GOROOT = "${pkgs.go}/share/go";
+    GOROOT = "/usr/local/opt/go/libexec";
     GOPATH = "$HOME/code/go";
     GOWORKSPACE = "$GOPATH/src/github.com/bsunter";
     PAGER = "less -R";
     EDITOR = "emacsclient";
     RUST_SRC_PATH="${pkgs.rustPlatform.rustcSrc}";
+    ANDROID_SDK_ROOT="/usr/local/share/android-sdk";
+    ANDROID_NDK_HOME="/usr/local/share/android-ndk";
 
     # History
     HISTSIZE = "1000";
@@ -174,7 +186,7 @@ set list                   " Show non-printable characters.
         '';
         packages.myVimPackage = with pkgs.vimPlugins; {
           # see examples below how to use custom packages
-          start = [ fugitive vim-polyglot vim-markdown vim-gitgutter "lightline.vim"];
+          start = [ fugitive vim-polyglot vim-markdown vim-gitgutter];
           opt = [ ];
         };
       };
