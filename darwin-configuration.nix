@@ -21,6 +21,7 @@
       fortune
       fzf
       gcc
+      go
       ghc
       gnupg
       gradle
@@ -102,14 +103,17 @@
     enableSyntaxHighlighting = true;
     enableFzfGit = true;
     promptInit='''';
+    shellInit = ''
+      export PATH="''$PATH:${pkgs.go}/bin";
+      '';
   };
 
   services.emacs.enable = true;
   environment.variables = {
     # General
     HOME = "/Users/bsunter";
-    GOROOT = "/usr/local/opt/go/libexec";
     GOPATH = "$HOME/code/go";
+    GOROOT="${pkgs.go}/share/go";
     GOWORKSPACE = "$GOPATH/src/github.com/bsunter";
     PAGER = "less -R";
     EDITOR = "nvim";

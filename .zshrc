@@ -2,6 +2,7 @@
 ## Terminal Vim Mode
 export KEYTIMEOUT=1
 bindkey -v
+bindkey '^r' fzf-history-widget
 
 # aliases
 alias ec='emacsclient -c'
