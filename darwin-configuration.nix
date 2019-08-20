@@ -101,35 +101,7 @@
     enableFzfHistory = true;
     enableSyntaxHighlighting = true;
     enableFzfGit = true;
-    promptInit=''
-      zstyle :prompt:pure:path color cyan
-         # from https://gist.github.com/oshybystyi/2c30543cd48b2c9ecab0
-      EMOJI=(🐦 🚀 🎨 🍕 🐭 ☕️ 🔬 🐷 🐼 🐶 🐧 🐳 🍔 🍻 🔮 💰 💎 💾 💜 🍪 🌞 🌍 🐌 🐓 🐏 ✈️ )
-      function random_emoji {
-        echo -n "$EMOJI[$RANDOM%$#EMOJI+1]"
-      }
-      setopt PROMPT_SUBST
-      PROMPT="$(random_emoji)"
-      '';
-    shellInit = ''
-      export PATH=$PATH:$GOPATH/bin
-      alias ec='emacsclient -c'
-      alias ds='darwin-rebuild switch'
-      alias simple-serve='python -m SimpleHTTPServer 8000'
-      source <(antibody init)
-      antibody bundle < ~/.zsh_plugins.txt
-      if test -f ~/.zshrc; then
-        source ~/.zshrc
-      fi
-      export PATH=$PATH:${pkgs.fasd}/bin
-      fasd_cache="$HOME/.fasd-init-bash"
-if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
-  fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install >| "$fasd_cache"
-fi
-source "$fasd_cache"
-unset fasd_cache
-
-      '';
+    promptInit='''';
   };
 
   services.emacs.enable = true;
@@ -140,7 +112,7 @@ unset fasd_cache
     GOPATH = "$HOME/code/go";
     GOWORKSPACE = "$GOPATH/src/github.com/bsunter";
     PAGER = "less -R";
-    EDITOR = "emacsclient";
+    EDITOR = "nvim";
     RUST_SRC_PATH="${pkgs.rustPlatform.rustcSrc}";
 
     # History
