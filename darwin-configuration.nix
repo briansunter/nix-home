@@ -48,6 +48,7 @@ in
       minikube
       neovim
       nnn
+      nodePackages.node2nix
       nodejs-12_x
       openjdk
       pandoc
@@ -168,8 +169,8 @@ in
         source = pkgs.fetchFromGitHub {
           owner = "syl20bnr";
           repo = "spacemacs";
-          rev = "1f93c05";
-          sha256 = "1x0s5xlwhajgnlnb9mk0mnabhvhsf97xk05x79rdcxwmf041h3fd";
+          rev = "582f9aa";
+          sha256 = "0m634adqnwqvi8d7qkq7nh8ivfz6cx90idvwd2wiylg4w1hly252";
         };
         recursive = true;
       };
