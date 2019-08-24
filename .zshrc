@@ -11,6 +11,7 @@ alias simple-serve='python -m SimpleHTTPServer 8000'
 # antibody
 source <(antibody init)
 antibody bundle < ~/.zsh_plugins.txt
+export EDITOR="nvim";
 
 export PATH=$PATH:$GOPATH/bin
 

@@ -1,7 +1,24 @@
-{ config, pkgs, ... }:
+{ config,  pkgs, ... }:
+let
+  pureZshSrc = pkgs.fetchFromGitHub {
+    owner = "sindresorhus";
+    repo = "pure";
+    rev = "ac72ba4eb274e7181b7db677838409adb190266e";
+    sha256 = "0zjgnlw01ri0brx108n6miw4y0cxd6al1bh28m8v8ygshm94p1zx";
+  };
+  pureZsh = pkgs.stdenv.mkDerivation rec {
+    name = "pure-zsh-${version}";
+    version = "2017-03-04";
+    src = pureZshSrc;
+    installPhase = ''
+      mkdir -p $out/share/zsh/site-functions
+      cp pure.zsh $out/share/zsh/site-functions/prompt_pure_setup
+      cp async.zsh $out/share/zsh/site-functions/async
+    '';
+  };
+in
 {
   imports = [ <home-manager/nix-darwin> ];
-
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.android_sdk.accept_license = true;
 
@@ -20,7 +37,6 @@
       emacs
       fortune
       fzf
-      gcc
       go
       ghc
       gnupg
@@ -46,9 +62,13 @@
       stack
       streamlink
       terraform_0_12
+      darwin.apple_sdk.frameworks.Cocoa
+      darwin.apple_sdk.frameworks.Carbon
+      go
       unzip
       vim
       wget
+      pureZsh
       youtube-dl
     ];
 
@@ -102,7 +122,11 @@
     enableFzfHistory = true;
     enableSyntaxHighlighting = true;
     enableFzfGit = true;
-    promptInit='''';
+    promptInit=''
+    fpath+=( "${pureZsh.out}/share/zsh/site-functions" $fpath )
+    autoload -U promptinit && promptinit
+    prompt pure
+    '';
     shellInit = ''
       export PATH="''$PATH:${pkgs.go}/bin";
       '';
@@ -112,11 +136,6 @@
   environment.variables = {
     # General
     HOME = "/Users/bsunter";
-    GOPATH = "$HOME/code/go";
-    GOROOT="${pkgs.go}/share/go";
-    GOWORKSPACE = "$GOPATH/src/github.com/bsunter";
-    PAGER = "less -R";
-    EDITOR = "nvim";
     RUST_SRC_PATH="${pkgs.rustPlatform.rustcSrc}";
 
     # History

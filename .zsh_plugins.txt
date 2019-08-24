@@ -5,7 +5,6 @@ caarlos0/zsh-open-github-pr
 djui/alias-tips
 mafredri/zsh-async
 pbar1/zsh-terraform
-sindresorhus/pure
 webyneter/docker-aliases
 wting/autojump
 zsh-users/zsh-autosuggestions
