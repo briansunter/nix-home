@@ -3,6 +3,7 @@
 export KEYTIMEOUT=1
 bindkey -v
 bindkey '^r' fzf-history-widget
+bindkey '^e' fzf-cd-widget
 
 # aliases
 alias ec='emacsclient -c'
