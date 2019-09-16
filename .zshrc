@@ -16,6 +16,10 @@ export EDITOR="nvim";
 export PATH=$PATH:$GOPATH/bin
 
 # FZF
+if [ -n "${commands[fzf-share]}" ]; then
+  source "$(fzf-share)/key-bindings.zsh"
+  source "$(fzf-share)/completion.zsh"
+fi
 ## fd - cd to selected directory
 fd() {
     local dir
