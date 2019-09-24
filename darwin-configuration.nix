@@ -75,8 +75,8 @@ in
 
   system.defaults = {
     dock = {
-      autohide = true;
-      orientation = "right";
+      autohide = false;
+      orientation = "bottom";
       showhidden = true;
       mineffect = "scale";
       launchanim = false;
@@ -178,7 +178,7 @@ in
   };
 
   # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
+  services.nix-daemon.enable = false;
   nix.package = pkgs.nix;
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

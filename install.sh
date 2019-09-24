@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 
-sh <(curl https://nixos.org/nix/install)
+# FZF
+if [ -z "$(nix}) ]; then
+  sh <(curl https://nixos.org/nix/install)
+fi
+
+sudo mv /etc/zshrc /etc/zshrc.bak
+sudo mv /etc/zprofile /etc/zprofile.bak
+
 mkdir -p ~/.nixpkgs
 ln -s "$(pwd)/darwin-configuration.nix" ~/.nixpkgs/darwin-configuration.nix
 . ~/.nix-profile/etc/profile.d/nix.sh
