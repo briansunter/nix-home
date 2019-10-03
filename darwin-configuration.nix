@@ -44,6 +44,7 @@ in
       htop
       jq
       keybase
+      boot
       leiningen
       minikube
       neovim
@@ -130,6 +131,7 @@ in
     '';
     shellInit = ''
       export PATH="''$PATH:${pkgs.go}/bin";
+      export PATH="''$PATH:${pkgs.boot}/bin";
       '';
   };
 
