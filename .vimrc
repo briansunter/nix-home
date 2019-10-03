@@ -1,6 +1,6 @@
-map <Space> <Leader> " Space to leader
+map <Space> <Leader>       " Space to leader
 set number                 " show line numbers
-map <silent> <Leader>ft :NERDTreeToggle<CR>
+map <silent> <Leader>ft :NERDTreeToggle<CR> " SPC-f-t to open nerdtree
 filetype plugin indent on  " Load plugins according to detected filetype.
 syntax on                  " Enable syntax highlighting.
 

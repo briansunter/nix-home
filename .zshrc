@@ -1,16 +1,18 @@
 # settings
 ## Terminal Vim Mode
-export KEYTIMEOUT=1
 bindkey -v
+export KEYTIMEOUT=1
 bindkey '^r' fzf-history-widget
 
 # aliases
 alias ec='emacsclient -c'
 alias ds='darwin-rebuild switch'
 alias simple-serve='python -m SimpleHTTPServer 8000'
+
 # antibody
 source <(antibody init)
 antibody bundle < ~/.zsh_plugins.txt
+
 export EDITOR="nvim";
 
 export PATH=$PATH:$GOPATH/bin
@@ -20,6 +22,7 @@ if [ -n "${commands[fzf-share]}" ]; then
   source "$(fzf-share)/key-bindings.zsh"
   source "$(fzf-share)/completion.zsh"
 fi
+
 ## fd - cd to selected directory
 fd() {
     local dir

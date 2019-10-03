@@ -68,9 +68,6 @@ values."
      rust
      scala
      sql
-     ;;(shell :variables
-      ;;      shell-default-height 30
-       ;;     shell-default-position 'bottom)
      shell-scripts
      spell-checking
      syntax-checking
@@ -184,7 +181,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 26
+                               :size 28
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -344,11 +341,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (push '("melpa-stable" . "stable.melpa.org/packages/") configuration-layer-elpa-archives)
   (push '(use-package . "melpa-stable") package-pinned-packages)
-  (setq org-directory "$HOME/gdrive/writing/")
+  (setq org-directory "/Volumes/Storage/gdrive/writing/")
   (setq org-default-notes-file (concat org-directory "/notes.org"))
-  (setq org-agenda-files '("~/gdrive/writing/"))
-  (setq org-directory '("~/gdrive/writing/"))
-  ;; (server-start)
+  (setq org-agenda-files org-directory)
+  (setq org-agenda-files org-directory)
   )
 
 (defun dotspacemacs/user-config ()
@@ -363,9 +359,9 @@ you should place your code here."
   (with-eval-after-load 'org
     (add-to-list 'org-modules 'org-protocol)
     (setq org-capture-templates '(
-                                  ("p" "Protocol" entry (file+headline "~/gdrive/writing/notes.org" "Inbox")
+                                  ("p" "Protocol" entry (file+headline org-default-notes-file "Inbox")
                                    "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
-                                  ("L" "Protocol Link" entry (file+headline "~/gdrive/writing/notes.org" "Inbox")
+                                  ("L" "Protocol Link" entry (file+headline org-default-notes-file "Inbox")
                                    "* %? [[%:link][%:description]] \nCaptured On: %U"))))
   (setq-default js2-basic-offset 2
                 js-indent-level 2
@@ -478,11 +474,6 @@ you should place your code here."
 
   (setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
   (setq helm-swoop-use-fuzzy-match t)
-
-  ;; Capture
-;;;;;;;;;;
-
-
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -513,25 +504,25 @@ you should place your code here."
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-agenda-files
-   (quote
-    ("~/gdrive/writing/notes/org")))
- '(package-selected-packages
-   (quote
-    (csv-mode parseedn parseclj a olivetti npm-mode camcorder transient lv graphql-mode reformatter mu4e-maildirs-extension mu4e-alert reason-mode utop tuareg caml ocp-indent merlin yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic hcl-mode org-mime sesman terraform-mode protobuf-mode ghub let-alist flymake-solidity solidity-mode winum unfill parent-mode fuzzy flx anzu company-emacs-eclim seq spinner pkg-info epl popup visual-fill-column powerline org-category-capture diminish bind-key packed avy iedit f evil goto-chg undo-tree async dash s adoc-mode markup-faces rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby flycheck-gometalinter noflet ensime sbt-mode scala-mode flx-isearch ob-browser emoji-cheat-sheet-plus company-emoji tide typescript-mode go-guru go-eldoc company-go go-mode yaml-mode typo swift-mode sql-indent insert-shebang flycheck-elm fish-mode elm-mode company-shell eclim racket-mode faceup vimrc-mode dactyl-mode magit-gh-pulls github-search github-clone github-browse-file gist gh marshal logito pcache writeroom-mode toml-mode racer intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-rust flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode cargo rust-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc company-tern tern coffee-mode psci purescript-mode psc-ide dash-functional pandoc-mode ox-pandoc ht smartparens bind-map highlight helm helm-core projectile hydra web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data ox-reveal clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider queue clojure-mode xterm-color smeargle shell-pop orgit org-projectile org-present org org-pomodoro alert log4e gntp org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help diff-hl company-statistics company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
- '(send-mail-function (quote smtpmail-send-it))
- '(smtpmail-smtp-server "smtp.gmail.com")
- '(smtpmail-smtp-service 587))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-done ((t (:weight normal :strike-through t))))
- '(org-headline-done ((((class color) (min-colors 16)) (:strike-through t)))))
-)
+  (custom-set-variables
+   ;; custom-set-variables was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(org-agenda-files
+     (quote
+      ("~/gdrive/writing/notes/org")))
+   '(package-selected-packages
+     (quote
+      (csv-mode parseedn parseclj a olivetti npm-mode camcorder transient lv graphql-mode reformatter mu4e-maildirs-extension mu4e-alert reason-mode utop tuareg caml ocp-indent merlin yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic hcl-mode org-mime sesman terraform-mode protobuf-mode ghub let-alist flymake-solidity solidity-mode winum unfill parent-mode fuzzy flx anzu company-emacs-eclim seq spinner pkg-info epl popup visual-fill-column powerline org-category-capture diminish bind-key packed avy iedit f evil goto-chg undo-tree async dash s adoc-mode markup-faces rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby flycheck-gometalinter noflet ensime sbt-mode scala-mode flx-isearch ob-browser emoji-cheat-sheet-plus company-emoji tide typescript-mode go-guru go-eldoc company-go go-mode yaml-mode typo swift-mode sql-indent insert-shebang flycheck-elm fish-mode elm-mode company-shell eclim racket-mode faceup vimrc-mode dactyl-mode magit-gh-pulls github-search github-clone github-browse-file gist gh marshal logito pcache writeroom-mode toml-mode racer intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-rust flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode cargo rust-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc company-tern tern coffee-mode psci purescript-mode psc-ide dash-functional pandoc-mode ox-pandoc ht smartparens bind-map highlight helm helm-core projectile hydra web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data ox-reveal clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider queue clojure-mode xterm-color smeargle shell-pop orgit org-projectile org-present org org-pomodoro alert log4e gntp org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help diff-hl company-statistics company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline restart-emacs request rainbow-delimiters quelpa popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
+   '(send-mail-function (quote smtpmail-send-it))
+   '(smtpmail-smtp-server "smtp.gmail.com")
+   '(smtpmail-smtp-service 587))
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(org-done ((t (:weight normal :strike-through t))))
+   '(org-headline-done ((((class color) (min-colors 16)) (:strike-through t)))))
+  )
