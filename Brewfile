@@ -1,0 +1,5 @@
+tap "homebrew/cask"
+cask "google-chrome"
+cask "iterm2"
+cask "google-backup-and-sync"
+cask "tor-browser"
