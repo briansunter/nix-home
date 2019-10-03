@@ -111,7 +111,7 @@ in
 
   system.keyboard = {
     enableKeyMapping = true;
-    remapCapsLockToEscape= true;
+    remapCapsLockToEscape = true;
   };
 
   networking.knownNetworkServices = ["Wi-Fi" "Bluetooth PAN" "Thunderbolt Bridge"];
@@ -125,13 +125,13 @@ in
     enableSyntaxHighlighting = true;
     enableFzfGit = true;
     promptInit=''
-    fpath+=( "${pureZsh.out}/share/zsh/site-functions" $fpath )
+    fpath+=("${pureZsh.out}/share/zsh/site-functions" $fpath )
     autoload -U promptinit && promptinit
     prompt pure
     '';
     shellInit = ''
-      export PATH="''$PATH:${pkgs.go}/bin";
-      export PATH="''$PATH:${pkgs.boot}/bin";
+      export PATH="''$PATH:${pkgs.go}/bin"
+      export PATH="''$PATH:${pkgs.boot}/bin"
       '';
   };
 
@@ -142,8 +142,8 @@ in
     RUST_SRC_PATH="${pkgs.rustPlatform.rustcSrc}";
 
     # History
-    HISTSIZE = "1000";
-    SAVEHIST = "1000";
+    HISTSIZE = "-1";
+    SAVEHIST = "-1";
     HISTFILE = "$HOME/.history";
 
     # Terminfo
@@ -156,7 +156,6 @@ in
       enable = true;
       configure = {
         packages.myVimPackage = with pkgs.vimPlugins; {
-          # see examples below how to use custom packages
           start = [ fugitive vim-polyglot vim-markdown vim-gitgutter];
           opt = [ ];
         };
