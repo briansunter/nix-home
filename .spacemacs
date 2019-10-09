@@ -355,6 +355,10 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 ;;; Set up some common mu4e variables
+  (evil-leader/set-key "/" 'spacemacs/helm-project-do-ag)
+  (setq helm-ag-base-command "rg -S --no-heading")
+
+
   (require 'org-protocol)
   (with-eval-after-load 'org
     (add-to-list 'org-modules 'org-protocol)

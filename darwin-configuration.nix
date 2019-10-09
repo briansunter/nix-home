@@ -30,7 +30,7 @@ in
       antibody
       lastpass-cli
       aria2
-      aws
+      awscli
       burpsuite
       cabal-install
       cargo
@@ -132,6 +132,9 @@ in
     shellInit = ''
       export PATH="''$PATH:${pkgs.go}/bin"
       export PATH="''$PATH:${pkgs.boot}/bin"
+      if [ -f ~/.localrc ]; then
+        source ~/.localrc
+      fi
       '';
   };
 
