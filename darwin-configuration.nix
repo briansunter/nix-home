@@ -49,6 +49,7 @@ in
       minikube
       neovim
       nnn
+      icdiff
       nodePackages.node2nix
       nodejs-12_x
       openjdk
@@ -168,6 +169,7 @@ in
       ".vimrc".text = (builtins.readFile ./.vimrc);
       ".zsh_plugins.txt".text = (builtins.readFile ./.zsh_plugins.txt);
       ".spacemacs".text = (builtins.readFile ./.spacemacs);
+      ".gitconfig".text = (builtins.readFile ./.gitconfig);
       ".zshrc".text = (builtins.readFile ./.zshrc);
       ".emacs.d" = {
         source = pkgs.fetchFromGitHub {
@@ -181,6 +183,7 @@ in
     };
   };
   system.activationScripts.extraActivation.text = ''
+    # Run brew bundle
     if [ ! -e /usr/loca/bin/brew ]; then
       (cd ~/nix-home && sudo -u bsunter /usr/local/bin/brew bundle)
     fi
