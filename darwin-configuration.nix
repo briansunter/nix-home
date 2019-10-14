@@ -182,7 +182,7 @@ in
   };
   system.activationScripts.extraActivation.text = ''
     if [ ! -e /usr/loca/bin/brew ]; then
-      sudo -u bsunter /usr/local/bin/brew bundle
+      (cd ~/nix-home && sudo -u bsunter /usr/local/bin/brew bundle)
     fi
       '';
   # Auto upgrade nix package and the daemon service.
