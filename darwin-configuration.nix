@@ -129,6 +129,7 @@ in
     fpath+=("${pureZsh.out}/share/zsh/site-functions" $fpath )
     autoload -U promptinit && promptinit
     prompt pure
+    zstyle :prompt:pure:path color cyan
     '';
     shellInit = ''
       export PATH="''$PATH:${pkgs.go}/bin"
